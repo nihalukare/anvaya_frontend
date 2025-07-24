@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { BASE_API_URL } from "../config";
+import useToast from "../context/ToastContext";
+import Toasts from "./Toasts";
 
 function AddAgentForm() {
   const [agentName, setAgentName] = useState("");
   const [agentEmail, setAgentEmail] = useState("");
+
+  const { showToast } = useToast();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -41,14 +45,19 @@ function AddAgentForm() {
       }
 
       const data = await response.json();
-      console.log(data);
+      showToast(data.message, "success");
+      setTimeout(() => {
+        location.reload();
+      }, 3000);
     } catch (error) {
       console.log(error);
+      showToast(error, "danger");
     }
   }
 
   return (
     <>
+      <Toasts />
       <div className="text-bg-light p-3">
         <div className="d-flex justify-content-center mb-3">
           <img
