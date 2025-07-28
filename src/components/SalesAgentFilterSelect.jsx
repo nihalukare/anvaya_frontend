@@ -18,13 +18,10 @@ export default function SalesAgentFilterSelect({
       className="form-select"
       value={searchParams.get("salesAgent")}
       onChange={(e) => {
-        setSearchParams(
-          (prev) => {
-            prev.set("salesAgent", e.target.value);
-            return prev;
-          },
-          { replace: true }
-        );
+        setSearchParams((prev) => {
+          prev.set("salesAgent", e.target.value);
+          return prev;
+        });
       }}
     >
       <option value="All">All</option>

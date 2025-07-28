@@ -27,12 +27,14 @@ export default function LeadStatus() {
         </div>
       )}
       <ul>
-        {statusValues.map((statusValue, index) => (
-          <li key={index}>
-            <span className="fw-medium">{statusValue}:</span>{" "}
-            {leads?.filter((lead) => lead.status === statusValue).length} Leads
-          </li>
-        ))}
+        {!loading &&
+          statusValues.map((statusValue, index) => (
+            <li key={index}>
+              <span className="fw-medium">{statusValue}:</span>{" "}
+              {leads?.filter((lead) => lead.status === statusValue).length}{" "}
+              Leads
+            </li>
+          ))}
       </ul>
     </div>
   );

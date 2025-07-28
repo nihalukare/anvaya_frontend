@@ -50,57 +50,60 @@ export default function DisplayLeadList({ leadsLoading, leadsError }) {
           </div>
         </div>
       )}
-      {filteredLeads?.length ? (
-        filteredLeads.slice(startIndex, endIndex).map((lead) => (
-          <div key={lead._id} className="row">
-            <div className="col">{lead.name}</div>
-            <div className="col">{lead.status}</div>
-            <div className="col">{lead.salesAgent.name}</div>
-            <div className="col">
-              {lead.status === "Closed" ? (
-                "Closed"
-              ) : (
-                <span
-                  className={
-                    Math.ceil(lead.timeLeftToClose / 86400000) < 0
-                      ? "text-danger"
-                      : "text-success"
-                  }
-                >
-                  {Math.ceil(lead.timeLeftToClose / 86400000) < 0
-                    ? `Lead overdue by ${Math.abs(
-                        Math.ceil(lead.timeLeftToClose / 86400000)
-                      )} ${
-                        Math.abs(Math.ceil(lead.timeLeftToClose / 86400000)) > 1
-                          ? "days"
-                          : "day"
-                      }`
-                    : `${Math.ceil(lead.timeLeftToClose / 86400000)} ${
-                        Math.ceil(lead.timeLeftToClose / 86400000) > 1
-                          ? "days"
-                          : "day"
-                      }`}
-                </span>
-              )}
+      {filteredLeads?.length
+        ? filteredLeads.slice(startIndex, endIndex).map((lead) => (
+            <div key={lead._id} className="row">
+              <div className="col">{lead.name}</div>
+              <div className="col">{lead.status}</div>
+              <div className="col">{lead.salesAgent.name}</div>
+              <div className="col">
+                {lead.status === "Closed" ? (
+                  "Closed"
+                ) : (
+                  <span
+                    className={
+                      Math.ceil(lead.timeLeftToClose / 86400000) < 0
+                        ? "text-danger"
+                        : "text-success"
+                    }
+                  >
+                    {Math.ceil(lead.timeLeftToClose / 86400000) < 0
+                      ? `Lead overdue by ${Math.abs(
+                          Math.ceil(lead.timeLeftToClose / 86400000)
+                        )} ${
+                          Math.abs(Math.ceil(lead.timeLeftToClose / 86400000)) >
+                          1
+                            ? "days"
+                            : "day"
+                        }`
+                      : `${Math.ceil(lead.timeLeftToClose / 86400000)} ${
+                          Math.ceil(lead.timeLeftToClose / 86400000) > 1
+                            ? "days"
+                            : "day"
+                        }`}
+                  </span>
+                )}
+              </div>
+              <div className="col">
+                {lead.priority === "High" && `🔴${lead.priority}`}
+                {lead.priority === "Medium" && `🟡${lead.priority}`}
+                {lead.priority === "Low" && `🟢${lead.priority}`}
+              </div>
+              <div className="col">
+                <Link to={`/leadManagement/${lead._id}`}>View</Link>
+              </div>
             </div>
-            <div className="col">
-              {lead.priority === "High" && `🔴${lead.priority}`}
-              {lead.priority === "Medium" && `🟡${lead.priority}`}
-              {lead.priority === "Low" && `🟢${lead.priority}`}
+          ))
+        : !leadsLoading && (
+            <div className="alert alert-primary" role="alert">
+              No leads found.
             </div>
-            <div className="col">
-              <Link to={`/leadManagement/${lead._id}`}>View</Link>
-            </div>
-          </div>
-        ))
-      ) : (
-        <div className="alert alert-primary" role="alert">
-          No leads found.
-        </div>
-      )}
+          )}
       <div className="fs-6 text-secondary my-3 text-center">
         (Showing:{" "}
-        {noOfPages > 1
+        {leadsLoading
+          ? "Loading..."
+          : noOfPages > 1
           ? `${startIndex + 1}-${endIndex} of total ${
               filteredLeads?.length
             } leads`

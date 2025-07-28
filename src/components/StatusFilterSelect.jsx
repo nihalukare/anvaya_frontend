@@ -6,13 +6,10 @@ export default function StatusFilterSelect({ searchParams, setSearchParams }) {
       className="form-select"
       value={searchParams.get("status")}
       onChange={(e) => {
-        setSearchParams(
-          (prev) => {
-            prev.set("status", e.target.value);
-            return prev;
-          },
-          { replace: true }
-        );
+        setSearchParams((prev) => {
+          prev.set("status", e.target.value);
+          return prev;
+        });
       }}
     >
       <option value="All">All</option>

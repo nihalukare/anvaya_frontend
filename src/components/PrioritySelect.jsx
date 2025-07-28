@@ -7,13 +7,10 @@ export default function PrioritySelect({ searchParams, setSearchParams }) {
         className="form-select"
         value={searchParams.get("priority")}
         onChange={(e) => {
-          setSearchParams(
-            (prev) => {
-              prev.set("priority", e.target.value);
-              return prev;
-            },
-            { replace: true }
-          );
+          setSearchParams((prev) => {
+            prev.set("priority", e.target.value);
+            return prev;
+          });
         }}
       >
         <option value="All">All</option>

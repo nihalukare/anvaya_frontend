@@ -137,7 +137,9 @@ function Home() {
                       ))}
                     <div className="fs-6 text-secondary my-3 text-center">
                       (Showing:{" "}
-                      {leads?.length === 0
+                      {loading
+                        ? "Loading..."
+                        : leads?.length === 0
                         ? "No leads assigned to this sales agent"
                         : noOfPages > 1
                         ? `${startIndex + 1}-${endIndex} of total ${

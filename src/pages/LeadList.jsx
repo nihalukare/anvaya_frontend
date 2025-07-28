@@ -14,18 +14,19 @@ import Header from "../components/Header";
 import DisplayLeadList from "../components/DisplayLeadList";
 import PrioritySelect from "../components/PrioritySelect";
 import { BASE_API_URL } from "../config";
+import SourceFilterSelect from "../components/SourceFilterSelect";
+import TagsFilterSelect from "../components/TagsFilterSelect";
 
 function LeadList() {
   const { setFilteredLeads, leadsAPIUrl, setLeadsAPIUrl } = useFiltersContext();
 
-  const [searchParams, setSearchParams] = useSearchParams(
-    {
-      status: "All",
-      salesAgent: "All",
-      priority: "All",
-    },
-    { replace: true }
-  );
+  const [searchParams, setSearchParams] = useSearchParams({
+    status: "All",
+    salesAgent: "All",
+    priority: "All",
+    source: "All",
+    tags: "All",
+  });
 
   const {
     data: leadsData,
@@ -49,12 +50,16 @@ function LeadList() {
   const status = searchParams.get("status");
   const salesAgent = searchParams.get("salesAgent");
   const priority = searchParams.get("priority");
+  const source = searchParams.get("source");
+  const tags = searchParams.get("tags");
 
   useEffect(() => {
     let filters = [];
     if (status !== "All") filters.push(`status=${status}`);
     if (salesAgent !== "All") filters.push(`salesAgent=${salesAgent}`);
     if (priority !== "All") filters.push(`priority=${priority}`);
+    if (source !== "All") filters.push(`source=${source}`);
+    if (tags !== "All") filters.push(`tags=${tags}`);
 
     setLeadsAPIUrl(() => {
       if (filters.length > 0) {
@@ -63,7 +68,7 @@ function LeadList() {
         return `${BASE_API_URL}/leads`;
       }
     });
-  }, [status, salesAgent, priority]);
+  }, [status, salesAgent, priority, source, tags]);
 
   return (
     <>
@@ -75,6 +80,12 @@ function LeadList() {
         </div>
         <div className="col-md-10">
           <section>
+            {
+              <div>
+                status: {status} | salesAgent: {salesAgent} | priority:{" "}
+                {priority} | source: {source}
+              </div>
+            }
             <DisplayLeadList
               leadsLoading={leadsLoading}
               leadsError={leadsError}
@@ -82,7 +93,7 @@ function LeadList() {
             <div className="p-2 mb-3 text-bg-light">
               <div>
                 <div>
-                  <h3 className="text-body-secondary">Filters: </h3>
+                  <h3 className="text-body-secondary">Filters </h3>
                   <div className="mb-3 d-flex align-items-center">
                     <p className="mb-0 ">
                       <span className="fw-medium me-2">Status:</span>
@@ -94,7 +105,7 @@ function LeadList() {
                       />
                     </div>
                     <p className="mb-0 me-2">
-                      <span className="fw-medium">Sales Agent:</span>
+                      <span className="fw-medium me-2">Sales Agent:</span>
                     </p>
                     <div className="col-md-4">
                       <SalesAgentFilterSelect
@@ -106,6 +117,26 @@ function LeadList() {
                       searchParams={searchParams}
                       setSearchParams={setSearchParams}
                     />
+                  </div>
+                  <div className="mb-3 d-flex align-items-center">
+                    <p className="mb-0 me-2">
+                      <span className="fw-medium me-2">Lead Source:</span>
+                    </p>
+                    <div className="col-md-4 me-5">
+                      <SourceFilterSelect
+                        searchParams={searchParams}
+                        setSearchParams={setSearchParams}
+                      />
+                    </div>
+                    <p className="mb-0 me-2">
+                      <span className="fw-medium me-2">Tags:</span>
+                    </p>
+                    <div className="col-md-4">
+                      <TagsFilterSelect
+                        searchParams={searchParams}
+                        setSearchParams={setSearchParams}
+                      />
+                    </div>
                   </div>
                 </div>
                 <h3 className="text-body-secondary">Sort by</h3>
