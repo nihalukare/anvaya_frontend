@@ -10,6 +10,9 @@ export default function ClearFiltersBtn({ searchParams, setSearchParams }) {
 
   const salesAgent = searchParams.get("salesAgent");
   const status = searchParams.get("status");
+  const priority = searchParams.get("priority");
+  const source = searchParams.get("source");
+  const tags = searchParams.get("tags");
 
   return (
     <>
@@ -17,19 +20,18 @@ export default function ClearFiltersBtn({ searchParams, setSearchParams }) {
       <button
         className="btn btn-outline-secondary mx-2"
         onClick={() => {
-          setLeadsAPIUrl(`${BASE_API_URL}/leads`);
           setTimeToClose("");
-          showToast("All Filters Cleared", "success");
           setStatus("All");
-          setSearchParams(
-            (prev) => {
-              if (salesAgent) prev.set("salesAgent", "All");
-              if (status) prev.set("status", "All");
-              prev.set("priority", "All");
-              return prev;
-            },
-            { replace: true }
-          );
+          setSearchParams((prev) => {
+            if (salesAgent && salesAgent !== "All")
+              prev.set("salesAgent", "All");
+            if (status && status !== "All") prev.set("status", "All");
+            if (priority && priority !== "All") prev.set("priority", "All");
+            if (source && source !== "All") prev.set("source", "All");
+            if (tags && tags !== "All") prev.set("tags", "All");
+            return prev;
+          });
+          showToast("All Filters Cleared", "success");
         }}
       >
         Clear Filters
