@@ -1,18 +1,21 @@
-import { useFetch } from "../hooks/useFetch";
 import { BASE_API_URL } from "../config";
-import SidebarMenu from "../components/SidebarMenu";
-import Header from "../components/Header";
+import { useFetch } from "../hooks/useFetch";
 import { Link, useSearchParams } from "react-router-dom";
-import ClearFiltersBtn from "../components/ClearFiltersBtn";
 import { useFiltersContext } from "../context/FiltersContext";
 import { useEffect, useState } from "react";
+
+import SidebarMenu from "../components/SidebarMenu";
+import Header from "../components/Header";
+import ClearFiltersBtn from "../components/ClearFiltersBtn";
 import LeadStatus from "../components/LeadStatus";
+import Pagination from "../components/Pagination";
+import DashboardStatusFilter from "../components/FilterComponents/DashboardStatusFilter";
+import TimeLeftToCloseCol from "../components/TimeLeftToCloseCol";
 
 function Home() {
-  const { status, setStatus, leadsAPIUrl, setLeadsAPIUrl } =
-    useFiltersContext();
+  const { status, leadsAPIUrl, setLeadsAPIUrl } = useFiltersContext();
 
-  const [searchParams, setSearchParams] = useSearchParams({});
+  const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(0);
 
   const { data, loading, error } = useFetch(leadsAPIUrl);
@@ -91,39 +94,7 @@ function Home() {
                           <div className="col">{lead.status}</div>
                           <div className="col">{lead.salesAgent.name}</div>
                           <div className="col">
-                            {lead.status === "Closed" ? (
-                              "Closed"
-                            ) : (
-                              <span
-                                className={
-                                  Math.ceil(lead.timeLeftToClose / 86400000) < 0
-                                    ? "text-danger"
-                                    : "text-success"
-                                }
-                              >
-                                {Math.ceil(lead.timeLeftToClose / 86400000) < 0
-                                  ? `Lead overdue by ${Math.abs(
-                                      Math.ceil(lead.timeLeftToClose / 86400000)
-                                    )} ${
-                                      Math.abs(
-                                        Math.ceil(
-                                          lead.timeLeftToClose / 86400000
-                                        )
-                                      ) > 1
-                                        ? "days"
-                                        : "day"
-                                    }`
-                                  : `${Math.ceil(
-                                      lead.timeLeftToClose / 86400000
-                                    )} ${
-                                      Math.ceil(
-                                        lead.timeLeftToClose / 86400000
-                                      ) > 1
-                                        ? "days"
-                                        : "day"
-                                    }`}
-                              </span>
-                            )}
+                            <TimeLeftToCloseCol lead={lead} />
                           </div>
                           <div className="col">
                             {lead.priority === "High" && `🔴${lead.priority}`}
@@ -135,6 +106,7 @@ function Home() {
                           </div>
                         </div>
                       ))}
+
                     <div className="fs-6 text-secondary my-3 text-center">
                       (Showing:{" "}
                       {loading
@@ -149,58 +121,11 @@ function Home() {
                       )
                     </div>
 
-                    {noOfPages > 1 ? (
-                      <nav>
-                        <ul className="pagination justify-content-center">
-                          <li
-                            className={`page-item ${
-                              currentPage < 1 ? " disabled" : ""
-                            }`}
-                          >
-                            <button
-                              className="page-link"
-                              aria-label="previous"
-                              onClick={() => {
-                                setCurrentPage((prev) => prev - 1);
-                              }}
-                            >
-                              <span>&laquo;</span>
-                            </button>
-                          </li>
-                          {[...Array(noOfPages).keys()].map((n) => (
-                            <li
-                              key={n}
-                              className={`page-item ${
-                                currentPage === n ? "active" : ""
-                              }`}
-                            >
-                              <button
-                                className="page-link"
-                                onClick={() => setCurrentPage(n)}
-                              >
-                                <span>{n + 1}</span>
-                              </button>
-                            </li>
-                          ))}
-
-                          <li
-                            className={`page-item ${
-                              currentPage > noOfPages - 2 ? "disabled" : ""
-                            }`}
-                          >
-                            <button
-                              className="page-link"
-                              aria-label="next"
-                              onClick={() => {
-                                setCurrentPage((prev) => prev + 1);
-                              }}
-                            >
-                              <span>&raquo;</span>
-                            </button>
-                          </li>
-                        </ul>
-                      </nav>
-                    ) : null}
+                    <Pagination
+                      noOfPages={noOfPages}
+                      currentPage={currentPage}
+                      setCurrentPage={setCurrentPage}
+                    />
                   </div>
                 </div>
               </div>
@@ -211,50 +136,7 @@ function Home() {
                   <p className="mb-0 me-3">
                     <span className="fw-medium">Status:</span>
                   </p>
-                  <div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="statusFilter"
-                        id="All"
-                        value="All"
-                        checked={status === "All"}
-                        onChange={(e) => setStatus(e.target.value)}
-                      />
-                      <label htmlFor="All" className="form-check-label">
-                        All
-                      </label>
-                    </div>
-
-                    {[
-                      ...Array(
-                        "New",
-                        "Contacted",
-                        "Qualified",
-                        "Proposal Sent",
-                        "Closed"
-                      ),
-                    ].map((statusValue, index) => (
-                      <div key={index} className="form-check form-check-inline">
-                        <input
-                          className="form-check-input"
-                          type="radio"
-                          name="statusFilter"
-                          id={statusValue}
-                          value={statusValue}
-                          checked={status === statusValue}
-                          onChange={(e) => setStatus(e.target.value)}
-                        />
-                        <label
-                          htmlFor={statusValue}
-                          className="form-check-label"
-                        >
-                          {statusValue}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
+                  <DashboardStatusFilter />
                   <ClearFiltersBtn
                     searchParams={searchParams}
                     setSearchParams={setSearchParams}

@@ -1,5 +1,5 @@
-import { useFetch } from "../hooks/useFetch";
-import { BASE_API_URL } from "../config";
+import { useFetch } from "../../hooks/useFetch";
+import { BASE_API_URL } from "../../config";
 
 export default function SalesAgentFilterSelect({
   searchParams,

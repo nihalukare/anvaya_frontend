@@ -1,9 +1,10 @@
 import { BASE_API_URL } from "../config";
+import { useState } from "react";
 
-import LeadForm from "./LeadForm";
 import useForm from "../context/FormContext";
 import useToast from "../context/ToastContext";
-import { useState } from "react";
+
+import LeadForm from "./Form/LeadForm";
 
 function LeadDetails({ leadDetails, loading }) {
   const {

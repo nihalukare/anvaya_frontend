@@ -1,15 +1,16 @@
-import { Link } from "react-router-dom";
-import { useFiltersContext } from "../context/FiltersContext";
-import Pagination from "./Pagination";
 import { useState } from "react";
+import { useFiltersContext } from "../../context/FiltersContext";
+import { Link } from "react-router-dom";
 
-export default function DisplayLeadsByStatus({ status }) {
+import Pagination from "../Pagination";
+import TimeLeftToCloseCol from "../TimeLeftToCloseCol";
+
+export default function DisplayLeadsByAgent({ salesAgentName }) {
   const { filteredLeads } = useFiltersContext();
-
   const [currentPage, setCurrentPage] = useState(0);
 
   const displayLeads = filteredLeads?.filter((lead) => {
-    return lead.status === status;
+    return lead.salesAgent.name === salesAgentName;
   });
 
   const PAGE_SIZE = 5;
@@ -27,20 +28,20 @@ export default function DisplayLeadsByStatus({ status }) {
             className="accordion-button"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target={`#leadsBy${status.split(" ").join("")}`}
+            data-bs-target={`#leadsBy${salesAgentName.split(" ").join("")}`}
           >
-            <strong className="me-1">Status:</strong> {status}
+            <strong className="me-1">Sales Agent:</strong> {salesAgentName}
           </button>
         </h2>
         <div
-          id={`leadsBy${status.split(" ").join("")}`}
+          id={`leadsBy${salesAgentName.split(" ").join("")}`}
           className="accordion-collapse collapse show"
         >
           <div className="accordion-body">
             <p className="mb-2">
               <span className="fw-medium">Showing:</span>{" "}
               {displayLeads?.length === 0
-                ? "No leads for this status"
+                ? "No leads assigned to this sales agent"
                 : noOfPages > 1
                 ? `${startIndex + 1}-${endIndex} of total ${
                     displayLeads?.length
@@ -53,7 +54,7 @@ export default function DisplayLeadsByStatus({ status }) {
                   <strong>Lead Name</strong>
                 </div>
                 <div className="col">
-                  <strong>Assigned Agent</strong>
+                  <strong>Status</strong>
                 </div>
                 <div className="col">
                   <strong>Estimated Time To Close</strong>
@@ -70,35 +71,9 @@ export default function DisplayLeadsByStatus({ status }) {
             {displayLeads?.slice(startIndex, endIndex).map((lead) => (
               <div key={lead._id} className="row">
                 <div className="col">{lead.name}</div>
-                <div className="col">{lead.salesAgent.name}</div>
+                <div className="col">{lead.status}</div>
                 <div className="col">
-                  {status === "Closed" ? (
-                    "Closed"
-                  ) : (
-                    <span
-                      className={
-                        Math.ceil(lead.timeLeftToClose / 86400000) < 0
-                          ? "text-danger"
-                          : "text-success"
-                      }
-                    >
-                      {Math.ceil(lead.timeLeftToClose / 86400000) < 0
-                        ? `Lead overdue by ${Math.abs(
-                            Math.ceil(lead.timeLeftToClose / 86400000)
-                          )} ${
-                            Math.abs(
-                              Math.ceil(lead.timeLeftToClose / 86400000)
-                            ) > 1
-                              ? "days"
-                              : "day"
-                          }`
-                        : `${Math.ceil(lead.timeLeftToClose / 86400000)} ${
-                            Math.ceil(lead.timeLeftToClose / 86400000) > 1
-                              ? "days"
-                              : "day"
-                          }`}
-                    </span>
-                  )}
+                  <TimeLeftToCloseCol lead={lead} />
                 </div>
                 <div className="col">
                   {lead.priority === "High" && `🔴${lead.priority}`}

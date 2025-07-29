@@ -1,4 +1,4 @@
-import { useFiltersContext } from "../context/FiltersContext";
+import { useFiltersContext } from "../../context/FiltersContext";
 
 export default function SortByTimeToClose() {
   const { timeToClose, setTimeToClose, setFilteredLeads } = useFiltersContext();

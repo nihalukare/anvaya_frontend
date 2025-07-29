@@ -5,7 +5,7 @@ import { faBackward } from "@fortawesome/free-solid-svg-icons";
 export default function SidebarMenu() {
   return (
     <section className="h-100">
-      <div className="text-bg-light h-100" style={{ minHeight: "100vh" }}>
+      <div className="text-bg-light h-100 min-vh-100">
         <h2 className="text-body-secondary px-3 py-2">Sidebar</h2>
         {document.location.pathname !== "/" && (
           <div className="px-3 pb-3">

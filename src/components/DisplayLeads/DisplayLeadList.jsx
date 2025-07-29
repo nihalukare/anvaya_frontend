@@ -1,9 +1,11 @@
-import { useFiltersContext } from "../context/FiltersContext";
+import { useFiltersContext } from "../../context/FiltersContext";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Pagination from "./Pagination";
 
-export default function DisplayLeadList({ leadsLoading, leadsError }) {
+import Pagination from "../Pagination";
+import TimeLeftToCloseCol from "../TimeLeftToCloseCol";
+
+export default function DisplayLeadList({ loading, error }) {
   const { filteredLeads } = useFiltersContext();
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -17,12 +19,12 @@ export default function DisplayLeadList({ leadsLoading, leadsError }) {
   return (
     <div className="p-2 mb-3 text-bg-light">
       <h2 className="text-bg-light">Lead Overview</h2>
-      {leadsLoading && (
+      {loading && (
         <div className="alert alert-primary" role="alert">
           Loading...
         </div>
       )}
-      {leadsError && (
+      {error && (
         <div className="alert alert-danger" role="alert">
           {error}
         </div>
@@ -57,32 +59,7 @@ export default function DisplayLeadList({ leadsLoading, leadsError }) {
               <div className="col">{lead.status}</div>
               <div className="col">{lead.salesAgent.name}</div>
               <div className="col">
-                {lead.status === "Closed" ? (
-                  "Closed"
-                ) : (
-                  <span
-                    className={
-                      Math.ceil(lead.timeLeftToClose / 86400000) < 0
-                        ? "text-danger"
-                        : "text-success"
-                    }
-                  >
-                    {Math.ceil(lead.timeLeftToClose / 86400000) < 0
-                      ? `Lead overdue by ${Math.abs(
-                          Math.ceil(lead.timeLeftToClose / 86400000)
-                        )} ${
-                          Math.abs(Math.ceil(lead.timeLeftToClose / 86400000)) >
-                          1
-                            ? "days"
-                            : "day"
-                        }`
-                      : `${Math.ceil(lead.timeLeftToClose / 86400000)} ${
-                          Math.ceil(lead.timeLeftToClose / 86400000) > 1
-                            ? "days"
-                            : "day"
-                        }`}
-                  </span>
-                )}
+                <TimeLeftToCloseCol lead={lead} />
               </div>
               <div className="col">
                 {lead.priority === "High" && `🔴${lead.priority}`}
@@ -94,14 +71,14 @@ export default function DisplayLeadList({ leadsLoading, leadsError }) {
               </div>
             </div>
           ))
-        : !leadsLoading && (
+        : !loading && (
             <div className="alert alert-primary" role="alert">
               No leads found.
             </div>
           )}
       <div className="fs-6 text-secondary my-3 text-center">
         (Showing:{" "}
-        {leadsLoading
+        {loading
           ? "Loading..."
           : noOfPages > 1
           ? `${startIndex + 1}-${endIndex} of total ${

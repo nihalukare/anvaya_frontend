@@ -1,21 +1,20 @@
 import { Link, useSearchParams } from "react-router-dom";
-
 import { useFiltersContext } from "../context/FiltersContext";
-import ClearFiltersBtn from "../components/ClearFiltersBtn";
-import StatusFilterSelect from "../components/StatusFilterSelect";
-import SalesAgentFilterSelect from "../components/SalesAgentFilterSelect";
-
-import SortByTimeToClose from "../components/SortByTimeToClose";
-
 import { useFetch } from "../hooks/useFetch";
 import { useEffect } from "react";
+import { BASE_API_URL } from "../config";
+
+import ClearFiltersBtn from "../components/ClearFiltersBtn";
+import StatusFilterSelect from "../components/FilterComponents/StatusFilterSelect";
+import SalesAgentFilterSelect from "../components/FilterComponents/SalesAgentFilterSelect";
+import SourceFilterSelect from "../components/FilterComponents/SourceFilterSelect";
+import TagsFilterSelect from "../components/FilterComponents/TagsFilterSelect";
+import PrioritySelect from "../components/FilterComponents/PrioritySelect";
+import SortByTimeToClose from "../components/FilterComponents/SortByTimeToClose";
+
 import SidebarMenu from "../components/SidebarMenu";
 import Header from "../components/Header";
-import DisplayLeadList from "../components/DisplayLeadList";
-import PrioritySelect from "../components/PrioritySelect";
-import { BASE_API_URL } from "../config";
-import SourceFilterSelect from "../components/SourceFilterSelect";
-import TagsFilterSelect from "../components/TagsFilterSelect";
+import DisplayLeadList from "../components/DisplayLeads/DisplayLeadList";
 
 function LeadList() {
   const { setFilteredLeads, leadsAPIUrl, setLeadsAPIUrl } = useFiltersContext();
@@ -28,24 +27,7 @@ function LeadList() {
     tags: "All",
   });
 
-  const {
-    data: leadsData,
-    loading: leadsLoading,
-    error: leadsError,
-  } = useFetch(leadsAPIUrl);
-  let leads = leadsData?.data;
-
-  useEffect(() => {
-    const currentTime = Date.now();
-    leads = leads?.map((lead) => {
-      let leadCreationTime = new Date(lead.createdAt).getTime();
-      let expectedCloseTime = leadCreationTime + lead.timeToClose * 86400000;
-      let timeLeftToClose = expectedCloseTime - currentTime;
-
-      return { ...lead, timeLeftToClose: timeLeftToClose };
-    });
-    setFilteredLeads(leads);
-  }, [leads]);
+  const { data: leadsData, loading, error } = useFetch(leadsAPIUrl);
 
   const status = searchParams.get("status");
   const salesAgent = searchParams.get("salesAgent");
@@ -61,35 +43,35 @@ function LeadList() {
     if (source !== "All") filters.push(`source=${source}`);
     if (tags !== "All") filters.push(`tags=${tags}`);
 
-    setLeadsAPIUrl(() => {
-      if (filters.length > 0) {
-        return `${BASE_API_URL}/leads?${filters.join("&")}`;
-      } else {
-        return `${BASE_API_URL}/leads`;
-      }
+    setLeadsAPIUrl(
+      `${BASE_API_URL}/leads${
+        filters.length ? `?` + `${filters.join("&")}` : ""
+      }`
+    );
+  }, [searchParams]);
+
+  useEffect(() => {
+    const currentTime = Date.now();
+    const processedLeads = leadsData?.data?.map((lead) => {
+      let leadCreationTime = new Date(lead.createdAt).getTime();
+      let expectedCloseTime = leadCreationTime + lead.timeToClose * 86400000;
+      let timeLeftToClose = expectedCloseTime - currentTime;
+
+      return { ...lead, timeLeftToClose };
     });
-  }, [status, salesAgent, priority, source, tags]);
+    setFilteredLeads(processedLeads);
+  }, [leadsData]);
 
   return (
     <>
       <Header headerText={"Lead List"} />
-
       <div className="row">
         <div className="col-md-2">
           <SidebarMenu />
         </div>
         <div className="col-md-10">
           <section>
-            {
-              <div>
-                status: {status} | salesAgent: {salesAgent} | priority:{" "}
-                {priority} | source: {source}
-              </div>
-            }
-            <DisplayLeadList
-              leadsLoading={leadsLoading}
-              leadsError={leadsError}
-            />
+            <DisplayLeadList loading={loading} error={error} />
             <div className="p-2 mb-3 text-bg-light">
               <div>
                 <div>

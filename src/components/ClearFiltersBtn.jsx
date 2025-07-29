@@ -1,12 +1,11 @@
 import { useFiltersContext } from "../context/FiltersContext";
-import { BASE_API_URL } from "../config";
 import Toasts from "./Toasts";
 import useToast from "../context/ToastContext";
 
 export default function ClearFiltersBtn({ searchParams, setSearchParams }) {
   const { showToast } = useToast();
 
-  const { setLeadsAPIUrl, setTimeToClose, setStatus } = useFiltersContext();
+  const { setTimeToClose, setStatus } = useFiltersContext();
 
   const salesAgent = searchParams.get("salesAgent");
   const status = searchParams.get("status");

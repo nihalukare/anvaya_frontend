@@ -1,17 +1,17 @@
 import { useFiltersContext } from "../context/FiltersContext";
-import DisplayLeadsByStatus from "../components/DisplayLeadsByStatus";
 import { useEffect } from "react";
 import { useFetch } from "../hooks/useFetch";
+import { useSearchParams } from "react-router";
 import { BASE_API_URL } from "../config";
 
-import SalesAgentFilterSelect from "../components/SalesAgentFilterSelect";
-import SortByTimeToClose from "../components/SortByTimeToClose";
 import ClearFiltersBtn from "../components/ClearFiltersBtn";
+import SalesAgentFilterSelect from "../components/FilterComponents/SalesAgentFilterSelect";
+import PrioritySelect from "../components/FilterComponents/PrioritySelect";
+import SortByTimeToClose from "../components/FilterComponents/SortByTimeToClose";
+
 import Header from "../components/Header";
 import SidebarMenu from "../components/SidebarMenu";
-import PrioritySelect from "../components/PrioritySelect";
-
-import { useSearchParams } from "react-router";
+import DisplayLeadsByStatus from "../components/DisplayLeads/DisplayLeadsByStatus";
 
 function LeadsByStatus() {
   const { leadsAPIUrl, setLeadsAPIUrl, setFilteredLeads } = useFiltersContext();
@@ -21,8 +21,7 @@ function LeadsByStatus() {
     priority: "All",
   });
 
-  const { data, loading, error } = useFetch(leadsAPIUrl);
-  let leads = data?.data;
+  const { data: leadsData, loading, error } = useFetch(leadsAPIUrl);
 
   const salesAgent = searchParams.get("salesAgent");
   const priority = searchParams.get("priority");
@@ -42,23 +41,19 @@ function LeadsByStatus() {
         filters.length ? `?` + `${filters.join("&")}` : ""
       }`
     );
-  }, [salesAgent, priority]);
+  }, [searchParams]);
 
   useEffect(() => {
     const currentTime = Date.now();
-    leads = leads?.map((lead) => {
+    const processedLeads = leadsData?.data?.map((lead) => {
       let leadCreationTime = new Date(lead.createdAt).getTime();
       let expectedCloseTime = leadCreationTime + lead.timeToClose * 86400000;
       let timeLeftToClose = expectedCloseTime - currentTime;
 
       return { ...lead, timeLeftToClose: timeLeftToClose };
     });
-    setFilteredLeads(leads);
-  }, [data]);
-
-  if (error) {
-    console.log(JSON.parse(error));
-  }
+    setFilteredLeads(processedLeads);
+  }, [leadsData]);
 
   return (
     <>
@@ -121,14 +116,11 @@ function LeadsByStatus() {
               )}
               {!loading && (
                 <div className="accordion" id="leadsByStatus">
-                  <DisplayLeadsByStatus leads={leads} status={"New"} />
-                  <DisplayLeadsByStatus leads={leads} status={"Contacted"} />
-                  <DisplayLeadsByStatus leads={leads} status={"Qualified"} />
-                  <DisplayLeadsByStatus
-                    leads={leads}
-                    status={"Proposal Sent"}
-                  />
-                  <DisplayLeadsByStatus leads={leads} status={"Closed"} />
+                  <DisplayLeadsByStatus status={"New"} />
+                  <DisplayLeadsByStatus status={"Contacted"} />
+                  <DisplayLeadsByStatus status={"Qualified"} />
+                  <DisplayLeadsByStatus status={"Proposal Sent"} />
+                  <DisplayLeadsByStatus status={"Closed"} />
                 </div>
               )}
             </div>

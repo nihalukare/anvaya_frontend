@@ -1,11 +1,13 @@
-import SidebarMenu from "../components/SidebarMenu";
-import TotalLeadsInPipeline from "../components/TotalLeadsInPipeline";
-import ClosedLeadsGraph from "../components/ClosedLeadsGraph";
-import LeadStatusGraph from "../components/LeadStatusGraph";
-import Header from "../components/Header";
 import { BASE_API_URL } from "../config";
 import { useFetch } from "../hooks/useFetch";
-import LeadsClosedLastWeek from "../components/LeadsClosedLastWeek";
+
+import TotalLeadsInPipeline from "../components/Charts/TotalLeadsInPipeline";
+import ClosedLeadsGraph from "../components/Charts/ClosedLeadsGraph";
+import LeadStatusGraph from "../components/Charts/LeadStatusGraph";
+import LeadsClosedLastWeek from "../components/Charts/LeadsClosedLastWeek";
+
+import Header from "../components/Header";
+import SidebarMenu from "../components/SidebarMenu";
 
 function Reports() {
   const { data, loading, error } = useFetch(`${BASE_API_URL}/leads`);

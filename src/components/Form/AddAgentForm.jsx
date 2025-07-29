@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { BASE_API_URL } from "../config";
-import useToast from "../context/ToastContext";
-import Toasts from "./Toasts";
+import { BASE_API_URL } from "../../config";
+
+import useToast from "../../context/ToastContext";
+import Toasts from "../Toasts";
 
 function AddAgentForm() {
   const [agentName, setAgentName] = useState("");

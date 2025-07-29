@@ -1,13 +1,12 @@
 import { BASE_API_URL } from "../config";
+import { Link } from "react-router-dom";
 
 import Header from "../components/Header";
+import LeadForm from "../components/Form/LeadForm";
+import Toasts from "../components/Toasts";
 
-import LeadForm from "../components/LeadForm";
 import useForm from "../context/FormContext";
 import useToast from "../context/ToastContext";
-
-import Toasts from "../components/Toasts";
-import { Link } from "react-router-dom";
 
 function AddLead() {
   const {

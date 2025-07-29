@@ -1,17 +1,17 @@
-import StatusFilterSelect from "../components/StatusFilterSelect";
-
-import SortByTimeToClose from "../components/SortByTimeToClose";
 import { useFiltersContext } from "../context/FiltersContext";
 import { useFetch } from "../hooks/useFetch";
 import { useEffect } from "react";
-
+import { useSearchParams } from "react-router-dom";
 import { BASE_API_URL } from "../config";
+
 import ClearFiltersBtn from "../components/ClearFiltersBtn";
+import StatusFilterSelect from "../components/FilterComponents/StatusFilterSelect";
+import PrioritySelect from "../components/FilterComponents/PrioritySelect";
+import SortByTimeToClose from "../components/FilterComponents/SortByTimeToClose";
+
 import Header from "../components/Header";
 import SidebarMenu from "../components/SidebarMenu";
-import DisplayLeadsByAgent from "../components/DisplayLeadsByAgent";
-import PrioritySelect from "../components/PrioritySelect";
-import { useSearchParams } from "react-router-dom";
+import DisplayLeadsByAgent from "../components/DisplayLeads/DisplayLeadsByAgent";
 
 function LeadsBySalesAgent() {
   const { leadsAPIUrl, setLeadsAPIUrl, setFilteredLeads } = useFiltersContext();
@@ -21,17 +21,16 @@ function LeadsBySalesAgent() {
     priority: "All",
   });
 
-  const { data, loading, error } = useFetch(leadsAPIUrl);
-  let leads = data?.data;
-
   const {
     data: agentsData,
     loading: agentsLoading,
     error: agentsError,
   } = useFetch(`${BASE_API_URL}/agents`);
 
-  let status = searchParams.get("status");
-  let priority = searchParams.get("priority");
+  const { data: leadsData, loading, error } = useFetch(leadsAPIUrl);
+
+  const status = searchParams.get("status");
+  const priority = searchParams.get("priority");
 
   useEffect(() => {
     let filters = [];
@@ -43,19 +42,19 @@ function LeadsBySalesAgent() {
         filters.length ? `?` + `${filters.join("&")}` : ""
       }`
     );
-  }, [status, priority]);
+  }, [searchParams]);
 
   useEffect(() => {
     const currentTime = Date.now();
-    leads = leads?.map((lead) => {
+    const processedLeads = leadsData?.data?.map((lead) => {
       let leadCreationTime = new Date(lead.createdAt).getTime();
       let expectedCloseTime = leadCreationTime + lead.timeToClose * 86400000;
       let timeLeftToClose = expectedCloseTime - currentTime;
 
-      return { ...lead, timeLeftToClose: timeLeftToClose };
+      return { ...lead, timeLeftToClose };
     });
-    setFilteredLeads(leads);
-  }, [data]);
+    setFilteredLeads(processedLeads);
+  }, [leadsData]);
 
   return (
     <>
@@ -109,17 +108,21 @@ function LeadsBySalesAgent() {
                   Error! Something went wrong.
                 </div>
               )}
-              {loading && (
-                <div className="alert alert-primary" role="alert">
-                  Loading...
-                </div>
-              )}
 
               <div className="accordion" id="leadsBySalesAgent">
+                {agentsLoading && (
+                  <div className="alert alert-primary" role="alert">
+                    Loading...
+                  </div>
+                )}
+                {agentsError && (
+                  <div className="alert alert-danger" role="alert">
+                    {agentsError}
+                  </div>
+                )}
                 {agentsData?.data?.map((salesAgent) => (
                   <DisplayLeadsByAgent
                     key={salesAgent._id}
-                    leads={leads}
                     salesAgentName={salesAgent.name}
                   />
                 ))}

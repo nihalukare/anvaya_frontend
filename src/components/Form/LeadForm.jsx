@@ -1,9 +1,9 @@
-import Select from "react-select";
-import { useFetch } from "../hooks/useFetch";
-import { BASE_API_URL } from "../config";
+import { useFetch } from "../../hooks/useFetch";
+import { BASE_API_URL } from "../../config";
 
-import useForm from "../context/FormContext";
-import useToast from "../context/ToastContext";
+import Select from "react-select";
+import useForm from "../../context/FormContext";
+import useToast from "../../context/ToastContext";
 
 function LeadForm({ submitFunction, isEdit }) {
   const { showToast } = useToast();

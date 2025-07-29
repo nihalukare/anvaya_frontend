@@ -1,8 +1,10 @@
 import { useFetch } from "../hooks/useFetch";
 import { BASE_API_URL } from "../config";
-import AddAgentForm from "../components/AddAgentForm";
-import SidebarMenu from "../components/SidebarMenu";
+
+import AddAgentForm from "../components/Form/AddAgentForm";
+
 import Header from "../components/Header";
+import SidebarMenu from "../components/SidebarMenu";
 
 function SalesAgentManagement() {
   const { data, loading, error } = useFetch(`${BASE_API_URL}/agents`);

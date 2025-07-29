@@ -1,7 +1,7 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { useFetch } from "../hooks/useFetch";
-import { BASE_API_URL } from "../config";
+import { useFetch } from "../../hooks/useFetch";
+import { BASE_API_URL } from "../../config";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
