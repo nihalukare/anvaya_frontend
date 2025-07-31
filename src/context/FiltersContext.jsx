@@ -9,6 +9,7 @@ export function FiltersProvider({ children }) {
   const [leadsAPIUrl, setLeadsAPIUrl] = useState();
   const [filteredLeads, setFilteredLeads] = useState([]);
   const [status, setStatus] = useState("All");
+  const [priority, setPriority] = useState("");
   const [timeToClose, setTimeToClose] = useState("");
 
   return (
@@ -22,6 +23,8 @@ export function FiltersProvider({ children }) {
         setTimeToClose,
         status,
         setStatus,
+        priority,
+        setPriority,
       }}
     >
       {children}

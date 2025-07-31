@@ -15,6 +15,7 @@ import SortByTimeToClose from "../components/FilterComponents/SortByTimeToClose"
 import SidebarMenu from "../components/SidebarMenu";
 import Header from "../components/Header";
 import DisplayLeadList from "../components/DisplayLeads/DisplayLeadList";
+import PrioritySort from "../components/FilterComponents/PrioritySort";
 
 function LeadList() {
   const { setFilteredLeads, leadsAPIUrl, setLeadsAPIUrl } = useFiltersContext();
@@ -127,10 +128,7 @@ function LeadList() {
                     <span className="fw-medium me-2">Priority:</span>
                   </p>
                   <div className="col-md-4 me-5">
-                    <PrioritySelect
-                      searchParams={searchParams}
-                      setSearchParams={setSearchParams}
-                    />
+                    <PrioritySort />
                   </div>
                   <p className="mb-0 me-2">
                     <span className="fw-medium">Time to Close:</span>

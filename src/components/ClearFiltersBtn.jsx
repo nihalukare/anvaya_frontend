@@ -5,7 +5,7 @@ import useToast from "../context/ToastContext";
 export default function ClearFiltersBtn({ searchParams, setSearchParams }) {
   const { showToast } = useToast();
 
-  const { setTimeToClose, setStatus } = useFiltersContext();
+  const { setTimeToClose, setPriority, setStatus } = useFiltersContext();
 
   const salesAgent = searchParams.get("salesAgent");
   const status = searchParams.get("status");
@@ -20,6 +20,7 @@ export default function ClearFiltersBtn({ searchParams, setSearchParams }) {
         className="btn btn-outline-secondary mx-2"
         onClick={() => {
           setTimeToClose("");
+          setPriority("");
           setStatus("All");
           setSearchParams((prev) => {
             if (salesAgent && salesAgent !== "All")
