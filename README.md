@@ -29,7 +29,7 @@ npm run dev
 - Node.js
 - Express
 - MongoDB
-- Bootsrap
+- Bootstrap
 
 ## Demo Video
 
