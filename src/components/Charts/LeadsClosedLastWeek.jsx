@@ -6,7 +6,9 @@ import { BASE_API_URL } from "../../config";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function LeadsClosedLastWeek() {
-  const { data, loading, error } = useFetch(`${BASE_API_URL}/report/last-week`);
+  const { data, loading, error } = useFetch(
+    `${BASE_API_URL}/reports/last-week`
+  );
 
   let normalisedData = data?.data.reduce((acc, lead) => {
     if (acc[lead.salesAgent.name] === undefined) {

@@ -6,7 +6,7 @@ import { BASE_API_URL } from "../../config";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function TotalLeadsInPipeline({ leads }) {
-  const { data, loading, error } = useFetch(`${BASE_API_URL}/report/pipeline`);
+  const { data, loading, error } = useFetch(`${BASE_API_URL}/reports/pipeline`);
 
   const closedLeads = leads?.length - data?.totalLeadsInPipeline;
 
