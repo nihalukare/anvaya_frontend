@@ -79,7 +79,7 @@ Watch a walkthrough of all major features of this application - [Video](https://
 
 ### POST /api/agents
 
-Create a new sales agent
+Create a new sales agent<br />
 Sample Response:
 
 ```
@@ -88,7 +88,7 @@ Sample Response:
 
 ### GET /api/agents
 
-Get all sales agents
+Get all sales agents<br />
 Sample Response:
 
 ```
@@ -97,7 +97,7 @@ Sample Response:
 
 ### POST /api/leads
 
-Create a new lead
+Create a new lead<br />
 Sample Response:
 
 ```
@@ -106,7 +106,7 @@ Sample Response:
 
 ### GET /api/leads
 
-Lists all leads
+Lists all leads<br />
 Sample Response:
 
 ```
@@ -115,7 +115,7 @@ Sample Response:
 
 ### PUT /api/leads/:id
 
-Update lead by id
+Update lead by id<br />
 Sample Response:
 
 ```
@@ -124,7 +124,7 @@ Sample Response:
 
 ### POST /api/leads/:id/comments
 
-Add a new comment
+Add a new comment<br />
 Sample Response:
 
 ```
@@ -133,7 +133,7 @@ Sample Response:
 
 ### GET /api/leads/:id/comments
 
-Get all comments for a lead
+Get all comments for a lead<br />
 Sample Response:
 
 ```
@@ -142,7 +142,7 @@ Sample Response:
 
 ### GET /api/report/last-week
 
-Get leads that were closed last week
+Get leads that were closed last week<br />
 Sample Response:
 
 ```
@@ -151,7 +151,7 @@ Sample Response:
 
 ### GET /api/report/pipeline
 
-Get total leads in pipeline
+Get total leads in pipeline<br />
 Sample Response:
 
 ```
@@ -160,7 +160,7 @@ Sample Response:
 
 ### GET /api/leads/:id
 
-Get Lead by Id
+Get Lead by Id<br />
 Sample Response:
 
 ```
