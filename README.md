@@ -1,6 +1,6 @@
 # ClientideOne
 
-ClientideOne is a Customer Relationship Management (CRM) application that helps sales teams manage their leads. It provides a user-friendly interface which enables users to have a detailed view of leads and add new leads. The app also makes it easier for sales agents to collaborate by sharing comments, tracking progress, and viewing reports with useful insights and analytics.
+ClientideOne is a CRM app that helps sales teams manage leads with ease. Users can add and view leads, collaborate through comments, track progress, and access reports with valuable insights.
 
 ---
 
@@ -39,41 +39,41 @@ Watch a walkthrough of all major features of this application - [Video](https://
 
 ### Dashboard
 
-- Display a paginated list of all leads.
-- Display distribution of all leads by status.
-- Quick Filters to filter out leads by status.
-- Add new lead button to create a new lead.
+- Paginated list of all leads.
+- Overview of leads distribution by status.
+- Quick filters to view leads by status.
+- Add New Lead button to create a new lead.
 
 ### LeadList
 
-- Display a paginated list of all leads.
-- Filters to filter out leads by status, sales agent, leads source, and tags.
-- Sorting options to sort leads by priorit(High, Medium and Low) and, Time to Close (nearest first and farthest first).
-- Add new lead button to create a new lead.
+- Paginated list of all leads with detailed view.
+- Filters to refine leads by status, sales agent, source, and tags.
+- Sorting options by priority (High, Medium, Low) and time to close (nearest first, farthest first).
+- Add New Lead button for quick new lead creation.
 
 ### Sales Agents Management
 
-- Display all available sales agents with their name and email.
-- Button to add new sales agent to the system.
+- Displays all sales agents with name and email.
+- Option to add new sales agents to the system.
 
 ### Reports
 
-- Display pie-chart of leads closed last week.
-- Display pie-chart of total leads in pipeline(closed and active).
-- Display a bar-graph of total leads closed by each sales agent.
-- Display a bar-graph of leads distribution by status.
+- Pie chart of leads closed last week.
+- Pie chart of total leads in pipeline (closed and active).
+- Bar graph of leads closed by each sales agent.
+- Bar graph of leads distribution by status.
 
 ### Leads by Status
 
-- Display leads groups by their status.
-- Filters to sort leads by sales agents and priority.
-- Sorting options to sort leads by Time to Close(nearest first and fartest first).
+- Leads grouped by their current status.
+- Filters to refine leads by sales agent and priority.
+- Sorting options by time to close (nearest first, farthest first).
 
 ### Leads by Agent
 
-- Display leads groups by their asigned sales agent.
-- Filters to sort leads by status and priority.
-- Sorting options to sort leads by Time to Close(nearest first and fartest first).
+- Leads grouped by assigned sales agent.
+- Filters to refine leads by status and priority.
+- Sorting options by time to close (nearest first, farthest first).
 
 ## API Reference
 
