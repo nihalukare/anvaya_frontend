@@ -33,7 +33,7 @@ npm run dev
 
 ## Demo Video
 
-Watch a walkthrough of all major features of this application - [Video](https://www.placehold.co)
+Watch a walkthrough of all major features of this application - [Video](https://drive.google.com/file/d/1AOiXlPmken43mc3PqLEz-BJ3uK3pE94r/view?usp=sharing)
 
 ## Features
 
