@@ -1,6 +1,6 @@
-# ClientideOne
+# Anvaya
 
-ClientideOne is a CRM app that helps sales teams manage leads with ease. Users can add and view leads, collaborate through comments, track progress, and access reports with valuable insights.
+Anvaya is a CRM app that helps sales teams manage leads with ease. Users can add and view leads, collaborate through comments, track progress, and access reports with valuable insights.
 
 ---
 
