@@ -22,15 +22,7 @@ export default function ClearFiltersBtn({ searchParams, setSearchParams }) {
           setTimeToClose("");
           setPriority("");
           setStatus("All");
-          setSearchParams((prev) => {
-            if (salesAgent && salesAgent !== "All")
-              prev.set("salesAgent", "All");
-            if (status && status !== "All") prev.set("status", "All");
-            if (priority && priority !== "All") prev.set("priority", "All");
-            if (source && source !== "All") prev.set("source", "All");
-            if (tags && tags !== "All") prev.set("tags", "All");
-            return prev;
-          });
+          setSearchParams();
           showToast("All Filters Cleared", "success");
         }}
       >

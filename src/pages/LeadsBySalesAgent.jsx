@@ -16,10 +16,7 @@ import DisplayLeadsByAgent from "../components/DisplayLeads/DisplayLeadsByAgent"
 function LeadsBySalesAgent() {
   const { leadsAPIUrl, setLeadsAPIUrl, setFilteredLeads } = useFiltersContext();
 
-  const [searchParams, setSearchParams] = useSearchParams({
-    status: "All",
-    priority: "All",
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const {
     data: agentsData,
@@ -29,8 +26,8 @@ function LeadsBySalesAgent() {
 
   const { data: leadsData, loading, error } = useFetch(leadsAPIUrl);
 
-  const status = searchParams.get("status");
-  const priority = searchParams.get("priority");
+  const status = searchParams.get("status") || "All";
+  const priority = searchParams.get("priority") || "All";
 
   useEffect(() => {
     let filters = [];

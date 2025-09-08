@@ -16,15 +16,12 @@ import DisplayLeadsByStatus from "../components/DisplayLeads/DisplayLeadsByStatu
 function LeadsByStatus() {
   const { leadsAPIUrl, setLeadsAPIUrl, setFilteredLeads } = useFiltersContext();
 
-  const [searchParams, setSearchParams] = useSearchParams({
-    salesAgent: "All",
-    priority: "All",
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data: leadsData, loading, error } = useFetch(leadsAPIUrl);
 
-  const salesAgent = searchParams.get("salesAgent");
-  const priority = searchParams.get("priority");
+  const salesAgent = searchParams.get("salesAgent") || "All";
+  const priority = searchParams.get("priority") || "All";
 
   useEffect(() => {
     let filters = [];

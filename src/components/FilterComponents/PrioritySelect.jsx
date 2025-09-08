@@ -5,7 +5,7 @@ export default function PrioritySelect({ searchParams, setSearchParams }) {
         name="priority"
         id="prioritySelect"
         className="form-select"
-        value={searchParams.get("priority")}
+        value={searchParams.get("priority") || "All"}
         onChange={(e) => {
           setSearchParams((prev) => {
             prev.set("priority", e.target.value);

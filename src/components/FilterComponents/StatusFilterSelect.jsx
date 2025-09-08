@@ -4,7 +4,7 @@ export default function StatusFilterSelect({ searchParams, setSearchParams }) {
       name="statusFilter"
       id="statusFilter"
       className="form-select"
-      value={searchParams.get("status")}
+      value={searchParams.get("status") || "All"}
       onChange={(e) => {
         setSearchParams((prev) => {
           prev.set("status", e.target.value);

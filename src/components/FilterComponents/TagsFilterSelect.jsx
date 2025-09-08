@@ -4,7 +4,7 @@ export default function TagsFilterSelect({ searchParams, setSearchParams }) {
       name="tagsFilter"
       id="tagsFilter"
       className="form-select"
-      value={searchParams.get("tags")}
+      value={searchParams.get("tags") || "All"}
       onChange={(e) => {
         setSearchParams((prev) => {
           prev.set("tags", e.target.value);

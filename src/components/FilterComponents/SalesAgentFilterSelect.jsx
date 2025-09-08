@@ -16,7 +16,7 @@ export default function SalesAgentFilterSelect({
       name="salesAgentFilter"
       id="salesAgentFilter"
       className="form-select"
-      value={searchParams.get("salesAgent")}
+      value={searchParams.get("salesAgent") || "All"}
       onChange={(e) => {
         setSearchParams((prev) => {
           prev.set("salesAgent", e.target.value);

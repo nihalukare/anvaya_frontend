@@ -4,7 +4,7 @@ export default function SourceFilterSelect({ searchParams, setSearchParams }) {
       name="sourceFilter"
       id="sourceFilter"
       className="form-select"
-      value={searchParams.get("source")}
+      value={searchParams.get("source") || "All"}
       onChange={(e) => {
         setSearchParams((prev) => {
           prev.set("source", e.target.value);

@@ -9,7 +9,7 @@ import StatusFilterSelect from "../components/FilterComponents/StatusFilterSelec
 import SalesAgentFilterSelect from "../components/FilterComponents/SalesAgentFilterSelect";
 import SourceFilterSelect from "../components/FilterComponents/SourceFilterSelect";
 import TagsFilterSelect from "../components/FilterComponents/TagsFilterSelect";
-import PrioritySelect from "../components/FilterComponents/PrioritySelect";
+
 import SortByTimeToClose from "../components/FilterComponents/SortByTimeToClose";
 
 import SidebarMenu from "../components/SidebarMenu";
@@ -20,21 +20,15 @@ import PrioritySort from "../components/FilterComponents/PrioritySort";
 function LeadList() {
   const { setFilteredLeads, leadsAPIUrl, setLeadsAPIUrl } = useFiltersContext();
 
-  const [searchParams, setSearchParams] = useSearchParams({
-    status: "All",
-    salesAgent: "All",
-    priority: "All",
-    source: "All",
-    tags: "All",
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data: leadsData, loading, error } = useFetch(leadsAPIUrl);
 
-  const status = searchParams.get("status");
-  const salesAgent = searchParams.get("salesAgent");
-  const priority = searchParams.get("priority");
-  const source = searchParams.get("source");
-  const tags = searchParams.get("tags");
+  const status = searchParams.get("status") || "All";
+  const salesAgent = searchParams.get("salesAgent") || "All";
+  const priority = searchParams.get("priority") || "All";
+  const source = searchParams.get("source") || "All";
+  const tags = searchParams.get("tags") || "All";
 
   useEffect(() => {
     let filters = [];
