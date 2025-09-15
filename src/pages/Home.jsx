@@ -57,6 +57,9 @@ function Home() {
               <div className="p-2 mb-3 text-bg-light">
                 <div className="px-3">
                   <h2 className="text-body-secondary">Main Content </h2>
+                  <p className="text-body-secondary">
+                    (Showing Recently Added Leads)
+                  </p>
                   {loading && (
                     <div className="alert alert-primary" role="alert">
                       Loading...
