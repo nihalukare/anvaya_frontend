@@ -13,10 +13,11 @@ import DashboardStatusFilter from "../components/FilterComponents/DashboardStatu
 import TimeLeftToCloseCol from "../components/TimeLeftToCloseCol";
 
 function Home() {
-  const { status, leadsAPIUrl, setLeadsAPIUrl } = useFiltersContext();
+  const { status } = useFiltersContext();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(0);
+  const [leadsAPIUrl, setLeadsAPIUrl] = useState("");
 
   const { data, loading, error } = useFetch(leadsAPIUrl);
   let leads = data?.data?.map((lead) => {
@@ -40,6 +41,8 @@ function Home() {
       setLeadsAPIUrl(`${BASE_API_URL}/api/dashboard/leads?status=${status}`);
     else setLeadsAPIUrl(`${BASE_API_URL}/api/dashboard/leads`);
   }, [status]);
+
+  console.log(leads);
 
   return (
     <>
