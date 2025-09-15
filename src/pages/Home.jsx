@@ -37,8 +37,8 @@ function Home() {
 
   useEffect(() => {
     if (status !== "All")
-      setLeadsAPIUrl(`${BASE_API_URL}/leads?status=${status}`);
-    else setLeadsAPIUrl(`${BASE_API_URL}/leads`);
+      setLeadsAPIUrl(`${BASE_API_URL}/api/dashboard/leads?status=${status}`);
+    else setLeadsAPIUrl(`${BASE_API_URL}/api/dashboard/leads`);
   }, [status]);
 
   return (
